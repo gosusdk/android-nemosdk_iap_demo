@@ -1,0 +1,9 @@
+{
+  "client_id": "64bca355-61f8-40d5-b495-550048ebbcb5.nemoverse",
+  "redirect_uri": "nemo.app.9dnft.android:/callback",
+  "end_session_redirect_uri": "nemo.app.9dnft.android:/callback",
+  "authorization_scope": "openid email profile",
+  "nemo_url": "https://gid.nemoverse.io",
+  "game_client_id": "m8000.fhlyslfhhcmslnaruc",
+  "sdk_signature": "A85JKDCra7LfVaNngQEYk7xNUJrFuh"
+}

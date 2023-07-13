@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SDKGOSU_New</string>
+
+    <string name="vaogame">Play Game</string>
+    <string name="facebook_app_id">717886485019785</string>
+    <string name="facebook_client_token">aa8f63fc71f1270492327a12453f331b</string>
+</resources>
