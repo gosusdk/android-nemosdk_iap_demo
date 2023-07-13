@@ -49,7 +49,7 @@ dependencies {
     implementation 'io.grpc:grpc-protobuf-lite:1.55.1'
     implementation 'io.grpc:grpc-stub:1.55.1'
     //sdk
-    implementation files('libs/nemosdk_v1.0.6.aar')
+    implementation files('libs/nemosdk_iap_v1.0.6.aar')
     implementation files('libs/nemosdk_tracking.aar')
     //add library
     implementation 'net.openid:appauth:0.11.1'
