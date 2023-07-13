@@ -150,7 +150,7 @@ USAGE NEMO LOGIN SDK
 
 2. Nemo SDK Basic Functions
 ---
-```c++
+```java
 //Login
 nemoSDK.login();
 
@@ -215,7 +215,7 @@ To utilize a feature listed above include the appropriate listed below in your `
 </application>
 ```
 
-```c++
+```java
 //Initialize SDK 
 
 Tracking.getInstance(activity).start("af_key");
