@@ -1,7 +1,7 @@
 Nemo SDK for Android (Goodgle Play's billing integration)
 ========================
 
-FEATURES *version: 1.0.6*
+FEATURES *version: 2.1.1*
 --------
 * Login
 * Billing
