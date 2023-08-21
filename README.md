@@ -13,6 +13,13 @@ INSTALLATION
 1. In your root-level (project-level) Gradle file `<project>/build.gradle`, add more plugins dependency to your `build.gradle` file:
 
 ```gradle
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://sdk-download.airbridge.io/maven" }
+    }
+}
 dependencies {
     // ...
     // google grpc
@@ -54,11 +61,11 @@ dependencies {
 
     // Nemo Tracking only: Optional
     implementation files('libs/nemosdk_tracking.aar')
-    implementation 'com.appsflyer:af-android-sdk:6.3.2'
-    implementation 'com.android.installreferrer:installreferrer:2.2'
     implementation platform('com.google.firebase:firebase-bom:31.1.0')
     implementation 'com.google.firebase:firebase-analytics:21.2.0'
     implementation 'com.google.firebase:firebase-messaging:23.1.0'
+    //airbridge
+    implementation "io.airbridge:sdk-android:2.22.0"
 }
 ```	
 // IF used tracking add plugin
@@ -67,7 +74,14 @@ Move config file (google-services.json) into the module (app-level) root directo
 app/
   google-services.json
 ```
-
+**- Add gosu-service.json file to folder main/assets**
+```json
+{
+  "client_id": "",
+  "airb_app_name": "sdkgosutest",
+  "airb_app_token": "d878da2af447440385fe9a4fe37b06a0"
+}
+```
 3. Add auth_config.json file to folder main/assets
 ```json
 {
@@ -80,7 +94,20 @@ app/
   "sdk_signature": "secrect-key-billng"
 }
 ```
-
+--------------------
+**Add permission in the /app/manifest/AndroidManifest.xml file.**
+```xml
+<!-- ============ PERMISSION ============== -->
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<!-- use for Push GSM -->
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+<!-- use for iab -->
+<uses-permission android:name="com.android.vending.BILLING" />
+<uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+```
 
 USAGE NEMO LOGIN SDK
 --------------------
@@ -198,23 +225,7 @@ public void call_billing()
 ```
 
 USAGE NEMO TRACKING SDK
---------------------
-To utilize a feature listed above include the appropriate listed below in your `AdroidManifest.xml` file.
-```xml
-<application android:supportsRtl="true">
- <receiver android:name="com.appsflyer.MultipleInstallBroadcastReceiver" android:exported="true" >
-    <intent-filter>
-      <action android:name="com.android.vending.INSTALL_REFERRER" />
-    </intent-filter>
- </receiver>
- <receiver android:name="com.appsflyer.SingleInstallBroadcastReceiver" android:exported="true" >
-  <intent-filter>
-	<action android:name="com.android.vending.INSTALL_REFERRER" />
-  </intent-filter>
- </receiver>
-</application>
-```
-
+----
 ```java
 protected void callTrackingExample()
 {
