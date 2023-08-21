@@ -216,13 +216,41 @@ To utilize a feature listed above include the appropriate listed below in your `
 ```
 
 ```java
-//Initialize SDK 
-
-Tracking.getInstance(activity).start("af_key");
-Tracking.getInstance(activity).trackingStartTrialEventAF()
-Tracking.getInstance(activity).trackLoginEventAF()
-Tracking.getInstance(activity).trackingStartTrialEventCustomAF(String jsonContent) 
-/* example: 
-jsonContent = {"event": "event_name", "params": {"key": "value", "key2": "value2"} }
-*/
+protected void callTrackingExample()
+{
+	String sub = "123456789";
+	/* tracking show login */
+	GTrackingManger.getInstance().init(this);
+	GTrackingManger.getInstance().trackingShowSignInSDK();
+	/* tracking login succeed */
+	GTrackingManger.getInstance().trackingSignIn(sub, sub, "email");
+	/* start tutorial*/
+	GTrackingManger.getInstance().trackingStartTrial(sub);
+	/* complete the tutorial*/
+	GTrackingManger.getInstance().trackingTutorialCompleted(sub);
+	/* character creation */
+	GTrackingManger.getInstance().doneNRU(
+		sub,
+		"server_id",
+		"role_id",
+		"Role Name"
+	);
+	GTrackingManger.getInstance().checkout(
+		"orderId",
+		"producId",
+		"amount",
+		"currency",
+		"sub"
+	);
+	GTrackingManger.getInstance().purchase(
+		"orderId",
+		"producId",
+		"amount",
+		"currency",
+		"sub"
+	);
+	/* custom event */
+	GTrackingManger.getInstance().trackingEvent("level_20");
+	GTrackingManger.getInstance().trackingEvent("level_20", "{\"customer_id\":\"1234\"}");
+}
 ```
