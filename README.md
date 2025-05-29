@@ -1,7 +1,7 @@
 Nemo SDK for Android (Goodgle Play's billing integration)
 ========================
 
-FEATURES *version: 2.1.1*
+FEATURES *version: 2.2.0*
 --------
 * Login
 * Billing
@@ -66,6 +66,19 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:23.1.0'
     //airbridge
     implementation "io.airbridge:sdk-android:2.22.0"
+    
+    // ITS Tracking
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'com.android.installreferrer:installreferrer:2.2'
+    implementation("com.google.android.play:review:2.0.1")
+    implementation 'androidx.core:core:1.10.1'
+    implementation "net.zetetic:sqlcipher-android:4.5.6@aar"
+    implementation "androidx.sqlite:sqlite:2.3.1"
+    implementation 'androidx.lifecycle:lifecycle-process:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-common:2.6.1'
+    implementation 'androidx.browser:browser:1.8.0'
+    implementation 'com.rudderstack.android.sdk:core:1.25.1'
 }
 ```	
 // IF used tracking add plugin
@@ -78,6 +91,8 @@ app/
 ```json
 {
   "client_id": "",
+  "its_app_write_key": "",
+  "its_app_signing_key": "",
   "airb_app_name": "sdkgosutest",
   "airb_app_token": "d878da2af447440385fe9a4fe37b06a0"
 }
@@ -94,6 +109,38 @@ app/
   "sdk_signature": "secrect-key-billng"
 }
 ```
+
+##### Add file config rule backup
+
+**-Add new  /app/src/main/res/xml/backup_rules_11.xml**
+```xml
+<full-backup-content>
+<exclude domain="sharedpref" path="its_prefs.xml"/>
+<exclude domain="sharedpref" path="rl_prefs.xml"/>
+</full-backup-content>
+```
+
+**-Add new  /app/src/main/res/xml/backup_rules_12.xml**
+```xml
+<data-extraction-rules>
+<cloud-backup>
+<exclude domain="sharedpref" path="its_prefs.xml"/>
+<exclude domain="sharedpref" path="rl_prefs.xml"/>
+</cloud-backup>
+</data-extraction-rules>
+```
+
+**-Open the /app/manifest/AndroidManifest.xml file.**
+```xml
+Merge XML manifest
+<application
+        tools:replace = "android:fullBackupContent"
+        android:allowBackup = "true"
+        android:fullBackupContent = "true"
+        android:fullBackupContent="@xml/backup_rules_11"
+        android:dataExtractionRules="@xml/backup_rules_12"
+/>
+
 --------------------
 **Add permission in the /app/manifest/AndroidManifest.xml file.**
 ```xml
@@ -225,43 +272,11 @@ public void call_billing()
 ```
 
 USAGE NEMO TRACKING SDK
-----
+--------------------
+
+The SDK supports tracking in-app events. To use it, you need to implement the `GTrackingManager` module. For detailed information, refer to the code example below.
 ```java
-protected void callTrackingExample()
-{
-	String sub = "123456789";
-	/* tracking show login */
-	GTrackingManger.getInstance().init(this);
-	GTrackingManger.getInstance().trackingShowSignInSDK();
-	/* tracking login succeed */
-	GTrackingManger.getInstance().trackingSignIn(sub, sub, "email");
-	/* start tutorial*/
-	GTrackingManger.getInstance().trackingStartTrial(sub);
-	/* complete the tutorial*/
-	GTrackingManger.getInstance().trackingTutorialCompleted(sub);
-	/* character creation */
-	GTrackingManger.getInstance().doneNRU(
-		sub,
-		"server_id",
-		"role_id",
-		"Role Name"
-	);
-	GTrackingManger.getInstance().checkout(
-		"orderId",
-		"producId",
-		"amount",
-		"currency",
-		"sub"
-	);
-	GTrackingManger.getInstance().purchase(
-		"orderId",
-		"producId",
-		"amount",
-		"currency",
-		"sub"
-	);
-	/* custom event */
-	GTrackingManger.getInstance().trackingEvent("level_20");
-	GTrackingManger.getInstance().trackingEvent("level_20", "{\"customer_id\":\"1234\"}");
-}
-```
+GTrackingManger.getInstance().completeRegistration("User_id");
+GTrackingManger.getInstance().completeTutorial();
+`````
+For detailed information on tracking events, please refer to the [Tracking Guide](./TRACKING_GUIDE.md).
